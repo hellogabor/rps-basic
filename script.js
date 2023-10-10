@@ -1,15 +1,42 @@
 function getComputerChoice() {
     let choice = Math.random();
     if (choice < 1 / 3) {
-        return "Rock";
+        return "rock";
     } else if (choice < 2 / 3) {
-        return "Paper";
+        return "paper";
     } else {
-        return "Scissors";
+        return "scissors";
     }
 }
 
-console.log(getComputerChoice());
+function playRound(playerSelection, computerSelection) {
+    switch (playerSelection + "-" + computerSelection) {
+        case "rock-rock":
+        case "paper-paper":
+        case "scissors-scissors":
+            return "Tie!";
+        case "rock-scissors":
+        case "paper-rock":
+        case "scissors-paper":
+            return `You win, ${playerSelection} beats ${computerSelection}`;
+        default:
+            return `You lose, ${computerSelection} beats ${playerSelection}`;
+    }
+}
+
+function game() {
+    const playerSelection = prompt("Rock, paper, or scissors?").toLowerCase()
+    const computerSelection = getComputerChoice()
+    return playRound(playerSelection, computerSelection)
+    return playRound(playerSelection, computerSelection)
+}
+
+console.log(game());
+
+
+
+/* Write a function that plays a single round of Rock Paper Scissors. The function should take two parameters - the playerSelection and computerSelection - and then return a string that declares the winner of the round like so: "You Lose! Paper beats Rock"
+Make your function’s playerSelection parameter case-insensitive (so users can input rock, ROCK, RocK or any other variation). */
 
 
 
