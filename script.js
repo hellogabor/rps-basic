@@ -22,7 +22,7 @@ function playRound(playerSelection, computerSelection) {
         case "rock-rock":
         case "paper-paper":
         case "scissors-scissors":
-            return "Tie!";
+            return roundResults.textContent = "Tie!";
         case "rock-scissors":
         case "paper-rock":
         case "scissors-paper":
