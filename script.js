@@ -9,7 +9,15 @@ function getComputerChoice() {
     }
 }
 
+let playerScore = 0;
+let computerScore = 0;
+
+const playerScoreTracker = document.querySelector('#playerScore');
+const computerScoreTracker = document.querySelector('#computerScore');
+
 function playRound(playerSelection, computerSelection) {
+    const lostRoundMessage = `You lose, ${computerSelection} beats ${playerSelection}`
+    const wonRoundMessage = `You win, ${playerSelection} beats ${computerSelection}`
     switch (playerSelection + "-" + computerSelection) {
         case "rock-rock":
         case "paper-paper":
@@ -18,18 +26,56 @@ function playRound(playerSelection, computerSelection) {
         case "rock-scissors":
         case "paper-rock":
         case "scissors-paper":
-            return `You win, ${playerSelection} beats ${computerSelection}`;
+            playerScoreTracker.textContent = 'your score: ' + ++playerScore;
+            scoreChecker();
+            return roundResults.textContent = wonRoundMessage;
         default:
-            return `You lose, ${computerSelection} beats ${playerSelection}`;
+            computerScoreTracker.textContent = 'computer score: ' + ++computerScore;
+            scoreChecker();
+            return roundResults.textContent = lostRoundMessage;
     }
 }
 
-function game() {
+const roundResults = document.querySelector('#round h3');
+
+const results = document.querySelector('#results');
+let winner = document.createElement('h1');
+
+const resetbtn = document.createElement('button');
+resetbtn.textContent = 'reset game';
+
+function scoreChecker() {
+    if (playerScore == 5 || computerScore == 5) {
+        if (playerScore == 5) {
+            winner.textContent = 'you won, noice';
+        } else {
+            winner.textContent = 'you lost :( sadness';
+        }
+
+        results.appendChild(winner);
+
+        resetbtn.addEventListener('click', reset);
+        results.appendChild(resetbtn);
+
+        // Maybe add some game reset logic here
+    }
+}
+
+function reset() {
+    playerScoreTracker.textContent = 'your score: 0';
+    computerScoreTracker.textContent = 'computer score: 0';
+    playerScore = 0;
+    computerScore = 0;
+    results.removeChild(winner);
+    results.removeChild(resetbtn);
+}
+
+/* function game() {
     const playerSelection = prompt("Rock, paper, or scissors?").toLowerCase()
     const computerSelection = getComputerChoice()
     return playRound(playerSelection, computerSelection)
     return playRound(playerSelection, computerSelection)
-}
+} */
 
 /* console.log(game()); */
 
@@ -46,9 +92,10 @@ btns.addEventListener('click', (event) => {
         case 'scissors':
             console.log(playRound(target.id, getComputerChoice()));
             break;
-
         }
     });
+
+
 
 /* Write a function that plays a single round of Rock Paper Scissors. The function should take two parameters - the playerSelection and computerSelection - and then return a string that declares the winner of the round like so: "You Lose! Paper beats Rock"
 Make your function’s playerSelection parameter case-insensitive (so users can input rock, ROCK, RocK or any other variation). */
